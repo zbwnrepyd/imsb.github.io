@@ -32,6 +32,7 @@ npm start
 ```
 
 `npm run dev` 用于开发，`npm start` 用于预览 `out/`。
+`npm start` 依赖系统可用的 `python3` 来提供静态文件服务。
 
 然后访问 `http://localhost:3000`。
 
