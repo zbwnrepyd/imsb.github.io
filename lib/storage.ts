@@ -20,6 +20,8 @@ type StoredVersionedValue = {
   version: number;
 };
 
+type Validator<T> = (value: unknown) => value is T;
+
 function getStorage(): Storage | null {
   if (typeof window === 'undefined') {
     return null;
@@ -32,7 +34,45 @@ function getStorage(): Storage | null {
   }
 }
 
-function readStoredValue<T extends StoredVersionedValue>(key: string): T | null {
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === 'string');
+}
+
+function isNumberRecord(value: unknown): value is Record<string, number> {
+  return (
+    isRecord(value) &&
+    Object.values(value).every((item) => typeof item === 'number')
+  );
+}
+
+function isQuizProgress(value: unknown): value is QuizProgress {
+  return (
+    isRecord(value) &&
+    value.version === STORAGE_VERSION &&
+    isStringArray(value.questionOrder) &&
+    isNumberRecord(value.answers) &&
+    typeof value.updatedAt === 'string'
+  );
+}
+
+function isLatestResult(value: unknown): value is LatestResult {
+  return (
+    isRecord(value) &&
+    value.version === STORAGE_VERSION &&
+    typeof value.typeCode === 'string' &&
+    isRecord(value.payload) &&
+    typeof value.createdAt === 'string'
+  );
+}
+
+function readStoredValue<T extends StoredVersionedValue>(
+  key: string,
+  validator: Validator<T>,
+): T | null {
   const storage = getStorage();
   if (!storage) {
     return null;
@@ -51,17 +91,12 @@ function readStoredValue<T extends StoredVersionedValue>(key: string): T | null 
 
   try {
     const parsed: unknown = JSON.parse(raw);
-    if (
-      typeof parsed !== 'object' ||
-      parsed === null ||
-      !('version' in parsed) ||
-      (parsed as StoredVersionedValue).version !== STORAGE_VERSION
-    ) {
+    if (!validator(parsed)) {
       removeStoredValue(key);
       return null;
     }
 
-    return parsed as T;
+    return parsed;
   } catch {
     try {
       storage.removeItem(key);
@@ -112,7 +147,7 @@ export function saveQuizProgress(progress: QuizProgress): void {
 }
 
 export function readQuizProgress(): QuizProgress | null {
-  return readStoredValue<QuizProgress>(QUIZ_PROGRESS_KEY);
+  return readStoredValue<QuizProgress>(QUIZ_PROGRESS_KEY, isQuizProgress);
 }
 
 export function clearQuizProgress(): void {
@@ -124,7 +159,7 @@ export function saveLatestResult(result: LatestResult): void {
 }
 
 export function readLatestResult(): LatestResult | null {
-  return readStoredValue<LatestResult>(LATEST_RESULT_KEY);
+  return readStoredValue<LatestResult>(LATEST_RESULT_KEY, isLatestResult);
 }
 
 export function clearLatestResult(): void {

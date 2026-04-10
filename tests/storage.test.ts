@@ -108,6 +108,38 @@ describe('storage helpers', () => {
     expect(readQuizProgress()).toBeNull();
   });
 
+  it('returns null for structurally corrupted quiz progress data with a matching version', () => {
+    const localStorage = createStorageMock();
+    vi.stubGlobal('window', { localStorage });
+
+    localStorage.setItem(
+      QUIZ_PROGRESS_KEY,
+      JSON.stringify({
+        version: STORAGE_VERSION,
+      }),
+    );
+
+    expect(readQuizProgress()).toBeNull();
+    expect(localStorage.removeItem).toHaveBeenCalledWith(QUIZ_PROGRESS_KEY);
+  });
+
+  it('returns null for structurally corrupted latest result data with a matching version', () => {
+    const localStorage = createStorageMock();
+    vi.stubGlobal('window', { localStorage });
+
+    localStorage.setItem(
+      LATEST_RESULT_KEY,
+      JSON.stringify({
+        version: STORAGE_VERSION,
+        typeCode: 'CTRL',
+        payload: null,
+      }),
+    );
+
+    expect(readLatestResult()).toBeNull();
+    expect(localStorage.removeItem).toHaveBeenCalledWith(LATEST_RESULT_KEY);
+  });
+
   it('exposes browser availability safely in a non-browser environment', () => {
     expect(canUseStorage()).toBe(false);
   });
