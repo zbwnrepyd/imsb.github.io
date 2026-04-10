@@ -136,6 +136,13 @@ ul {
   color: rgba(26, 23, 17, 0.85);
 }
 
+.home-helper-copy {
+  margin-top: 14px;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: rgba(26, 23, 17, 0.66);
+}
+
 .home-cta-row {
   display: flex;
   flex-wrap: wrap;
@@ -164,6 +171,14 @@ ul {
 .home-button:hover {
   transform: translateY(-1px);
   background: var(--accent-deep);
+}
+
+.home-button:disabled,
+.home-button[aria-disabled="true"] {
+  cursor: not-allowed;
+  transform: none;
+  background: rgba(31, 106, 82, 0.48);
+  color: rgba(247, 244, 236, 0.92);
 }
 
 .home-button--ghost {

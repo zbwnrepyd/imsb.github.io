@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { dimensionOrder, questions } from "@/lib/quiz-data";
 
 export function Hero() {
@@ -13,13 +12,17 @@ export function Hero() {
           questions, and results that feel a little too specific for comfort.
         </p>
         <div className="home-cta-row">
-          <Link className="home-button" href="/quiz">
-            Take the parody test
-          </Link>
-          <Link className="home-button home-button--ghost" href="#result-previews">
+          <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
+            Interactive test coming next
+          </button>
+          <a className="home-button home-button--ghost" href="#result-previews">
             Preview the types
-          </Link>
+          </a>
         </div>
+        <p className="home-helper-copy">
+          This landing page is live first for SEO and context. The quiz flow ships in the next task, so there is
+          no broken route hiding behind the button.
+        </p>
         <ul className="home-tag-list" aria-label="Landing page highlights">
           <li>{questions.length} core questions</li>
           <li>{dimensionOrder.length} dimensions of nonsense</li>
