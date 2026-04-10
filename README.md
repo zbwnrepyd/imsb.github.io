@@ -1,30 +1,34 @@
 # imsb
 
-纯静态站点，适合直接部署到 Cloudflare Pages。
+Next.js 静态导出工程，现有 `public/` 静态站点会在后续任务中逐步迁移。
 
 ## 目录
 
-- `public/index.html`：站点入口
-- `public/main.css`：页面样式
-- `public/main.js`：题库、评分和结果页逻辑
+- `app/layout.tsx`：App Router 根布局
+- `app/page.tsx`：占位首页
+- `app/globals.css`：全局样式
+- `public/index.html`：旧站点入口
+- `public/main.css`：旧页面样式
+- `public/main.js`：旧题库、评分和结果页逻辑
 
 ## Cloudflare Pages 配置
 
-- Framework preset：`None`
-- Build command：留空
-- Build output directory：`public`
+- Framework preset: `Next.js (Static HTML Export)`
+- Build command: `npx next build`
+- Build output directory: `out`
 
 ## 本地预览
 
-如果只是快速看页面，可以在仓库根目录执行：
+开发时先安装依赖，再启动本地服务：
 
 ```bash
-python3 -m http.server 8000 --directory public
+npm install
+npm run dev
 ```
 
-然后访问 `http://localhost:8000`。
+然后访问 `http://localhost:3000`。
 
 ## 说明
 
-- 不需要 `wrangler deploy`
-- 这是纯静态资源发布，不需要依赖安装和构建步骤
+- 这是静态导出配置，构建产物会输出到 `out`
+- 旧的纯静态资源保留在 `public/`，不在本任务中删除或重构

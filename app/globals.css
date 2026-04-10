@@ -1,0 +1,34 @@
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+main {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+h1,
+p {
+  margin: 0;
+}
