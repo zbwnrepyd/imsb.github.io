@@ -7,6 +7,7 @@ import {
   questions,
   type DimensionKey,
   type Level,
+  type QuizQuestionId,
   type TypeCode,
 } from './quiz-data';
 
@@ -67,14 +68,27 @@ export function getDrunkTriggered(answers: QuizAnswers): boolean {
   return answers[DRUNK_TRIGGER_QUESTION_ID] === 2;
 }
 
+function getMissingRegularQuestionIds(answers: QuizAnswers): QuizQuestionId[] {
+  return questions
+    .filter((question) => answers[question.id] === undefined)
+    .map((question) => question.id);
+}
+
 export function computeResult(answers: QuizAnswers): QuizResult {
+  const missingRegularQuestionIds = getMissingRegularQuestionIds(answers);
+
+  if (missingRegularQuestionIds.length > 0) {
+    throw new Error(
+      `Incomplete quiz answers: missing regular question answers for ${missingRegularQuestionIds.join(', ')}`,
+    );
+  }
+
   const rawScores = Object.fromEntries(
     (Object.keys(dimensionMeta) as DimensionKey[]).map((dimension) => [dimension, 0]),
   ) as Record<DimensionKey, number>;
 
   for (const question of questions) {
-    const dimension = question.dim as DimensionKey;
-    rawScores[dimension] += Number(answers[question.id] ?? 0);
+    rawScores[question.dim] += Number(answers[question.id]);
   }
 
   const levels = Object.fromEntries(
