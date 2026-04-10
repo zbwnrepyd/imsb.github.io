@@ -110,7 +110,9 @@ describe('storage helpers', () => {
       }),
     );
 
+    expect(localStorage.getItem(QUIZ_PROGRESS_KEY)).not.toBeNull();
     expect(readQuizProgress()).toBeNull();
+    expect(localStorage.getItem(QUIZ_PROGRESS_KEY)).toBeNull();
     expect(localStorage.removeItem).toHaveBeenCalledWith(QUIZ_PROGRESS_KEY);
   });
 
