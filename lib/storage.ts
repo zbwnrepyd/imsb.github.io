@@ -1,3 +1,5 @@
+import type { QuizResult, RankedType } from './quiz-engine';
+
 export const STORAGE_VERSION = 1;
 export const QUIZ_PROGRESS_KEY = 'imsb.quiz.progress';
 export const LATEST_RESULT_KEY = 'imsb.result.latest';
@@ -12,7 +14,7 @@ export type QuizProgress = {
 export type LatestResult = {
   version: number;
   typeCode: string;
-  payload: Record<string, unknown>;
+  payload: QuizResult;
   createdAt: string;
 };
 
@@ -49,6 +51,36 @@ function isNumberRecord(value: unknown): value is Record<string, number> {
   );
 }
 
+function isLevel(value: unknown): value is 'L' | 'M' | 'H' {
+  return value === 'L' || value === 'M' || value === 'H';
+}
+
+function isLevelRecord(value: unknown): value is Record<string, 'L' | 'M' | 'H'> {
+  return isRecord(value) && Object.values(value).every(isLevel);
+}
+
+function isTypeProfileSnapshot(
+  value: unknown,
+): value is Pick<RankedType, 'code' | 'cn' | 'intro' | 'desc'> {
+  return (
+    isRecord(value) &&
+    typeof value.code === 'string' &&
+    typeof value.cn === 'string' &&
+    typeof value.intro === 'string' &&
+    typeof value.desc === 'string'
+  );
+}
+
+function isRankedTypeSnapshot(value: unknown): value is RankedType {
+  return (
+    isTypeProfileSnapshot(value) &&
+    typeof value.pattern === 'string' &&
+    typeof value.distance === 'number' &&
+    typeof value.exact === 'number' &&
+    typeof value.similarity === 'number'
+  );
+}
+
 function isQuizProgress(value: unknown): value is QuizProgress {
   return (
     isRecord(value) &&
@@ -59,12 +91,30 @@ function isQuizProgress(value: unknown): value is QuizProgress {
   );
 }
 
+function isQuizResult(value: unknown): value is QuizResult {
+  return (
+    isRecord(value) &&
+    isNumberRecord(value.rawScores) &&
+    isLevelRecord(value.levels) &&
+    Array.isArray(value.ranked) &&
+    value.ranked.every(isRankedTypeSnapshot) &&
+    isRankedTypeSnapshot(value.bestNormal) &&
+    (isTypeProfileSnapshot(value.finalType) || isRankedTypeSnapshot(value.finalType)) &&
+    typeof value.modeKicker === 'string' &&
+    typeof value.badge === 'string' &&
+    typeof value.sub === 'string' &&
+    typeof value.special === 'boolean' &&
+    (value.secondaryType === null || isRankedTypeSnapshot(value.secondaryType))
+  );
+}
+
 function isLatestResult(value: unknown): value is LatestResult {
   return (
     isRecord(value) &&
     value.version === STORAGE_VERSION &&
     typeof value.typeCode === 'string' &&
-    isRecord(value.payload) &&
+    isQuizResult(value.payload) &&
+    value.typeCode === value.payload.finalType.code &&
     typeof value.createdAt === 'string'
   );
 }

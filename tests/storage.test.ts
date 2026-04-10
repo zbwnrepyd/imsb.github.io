@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { questions } from '../lib/quiz-data';
+import { computeResult } from '../lib/quiz-engine';
 import {
   LATEST_RESULT_KEY,
   QUIZ_PROGRESS_KEY,
@@ -25,6 +27,10 @@ function createStorageMock() {
       store.delete(key);
     }),
   };
+}
+
+function buildUniformAnswers(value: number) {
+  return Object.fromEntries(questions.map((question) => [question.id, value]));
 }
 
 afterEach(() => {
@@ -73,12 +79,11 @@ describe('storage helpers', () => {
     const localStorage = createStorageMock();
     vi.stubGlobal('window', { localStorage });
 
+    const result = computeResult(buildUniformAnswers(3));
     const latest = {
       version: STORAGE_VERSION,
-      typeCode: 'CTRL',
-      payload: {
-        badge: '匹配度 87%',
-      },
+      typeCode: result.finalType.code,
+      payload: result,
       createdAt: '2026-04-10T00:00:00.000Z',
     };
 
@@ -106,6 +111,7 @@ describe('storage helpers', () => {
     );
 
     expect(readQuizProgress()).toBeNull();
+    expect(localStorage.removeItem).toHaveBeenCalledWith(QUIZ_PROGRESS_KEY);
   });
 
   it('returns null for structurally corrupted quiz progress data with a matching version', () => {
@@ -127,12 +133,21 @@ describe('storage helpers', () => {
     const localStorage = createStorageMock();
     vi.stubGlobal('window', { localStorage });
 
+    const result = computeResult(buildUniformAnswers(3));
     localStorage.setItem(
       LATEST_RESULT_KEY,
       JSON.stringify({
         version: STORAGE_VERSION,
-        typeCode: 'CTRL',
-        payload: null,
+        typeCode: result.finalType.code,
+        payload: {
+          ...result,
+          finalType: {
+            code: result.finalType.code,
+            cn: result.finalType.cn,
+            intro: result.finalType.intro,
+          },
+        },
+        createdAt: '2026-04-10T00:00:00.000Z',
       }),
     );
 
