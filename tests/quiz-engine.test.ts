@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
 import { questions } from '../lib/quiz-data';
@@ -8,6 +11,15 @@ function buildUniformAnswers(value: number) {
 }
 
 describe('computeResult regression', () => {
+  it('keeps quiz data as static TS exports without node runtime extraction', () => {
+    const quizDataSource = readFileSync(resolve(__dirname, '../lib/quiz-data.ts'), 'utf8');
+
+    expect(quizDataSource).not.toContain('node:fs');
+    expect(quizDataSource).not.toContain('node:vm');
+    expect(quizDataSource).not.toContain('readFileSync');
+    expect(quizDataSource).not.toContain('runInContext');
+  });
+
   it('returns DRUNK when the hidden drink trigger is selected', () => {
     const answers = {
       ...buildUniformAnswers(3),

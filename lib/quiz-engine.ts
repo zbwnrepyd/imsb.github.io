@@ -7,6 +7,7 @@ import {
   questions,
   type DimensionKey,
   type Level,
+  type TypeCode,
 } from './quiz-data';
 
 export type QuizAnswers = Record<string, number | undefined>;
@@ -72,7 +73,8 @@ export function computeResult(answers: QuizAnswers): QuizResult {
   ) as Record<DimensionKey, number>;
 
   for (const question of questions) {
-    rawScores[question.dim] += Number(answers[question.id] ?? 0);
+    const dimension = question.dim as DimensionKey;
+    rawScores[dimension] += Number(answers[question.id] ?? 0);
   }
 
   const levels = Object.fromEntries(
@@ -99,7 +101,7 @@ export function computeResult(answers: QuizAnswers): QuizResult {
 
     return {
       ...type,
-      ...TYPE_LIBRARY[type.code],
+      ...TYPE_LIBRARY[type.code as TypeCode],
       distance,
       exact,
       similarity: Math.max(0, Math.round((1 - distance / 30) * 100)),
