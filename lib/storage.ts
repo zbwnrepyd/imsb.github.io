@@ -73,7 +73,11 @@ function isTypeProfileSnapshot(
 
 function isRankedTypeSnapshot(value: unknown): value is RankedType {
   return (
-    isTypeProfileSnapshot(value) &&
+    isRecord(value) &&
+    typeof value.code === 'string' &&
+    typeof value.cn === 'string' &&
+    typeof value.intro === 'string' &&
+    typeof value.desc === 'string' &&
     typeof value.pattern === 'string' &&
     typeof value.distance === 'number' &&
     typeof value.exact === 'number' &&

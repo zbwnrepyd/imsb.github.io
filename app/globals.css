@@ -1,7 +1,15 @@
 :root {
   color-scheme: light;
-  --background: #ffffff;
-  --foreground: #111827;
+  --background: #f3efe3;
+  --foreground: #1a1711;
+  --surface: rgba(255, 252, 246, 0.78);
+  --surface-strong: #fff8ec;
+  --line: rgba(26, 23, 17, 0.12);
+  --accent: #1f6a52;
+  --accent-soft: #d6ebdf;
+  --accent-deep: #124433;
+  --shadow: 0 24px 60px rgba(41, 37, 30, 0.12);
+  --max-width: 1120px;
 }
 
 * {
@@ -9,7 +17,8 @@
 }
 
 html {
-  font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 }
 
 body {
@@ -17,18 +26,304 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
+  background-image:
+    radial-gradient(circle at top left, rgba(128, 189, 160, 0.35), transparent 34%),
+    radial-gradient(circle at top right, rgba(246, 215, 150, 0.42), transparent 28%),
+    linear-gradient(180deg, #f9f5eb 0%, #efe8d8 100%);
 }
 
 main {
   min-height: 100vh;
-  display: grid;
-  place-content: center;
-  gap: 12px;
-  padding: 32px;
-  text-align: center;
+}
+
+a,
+button {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
 }
 
 h1,
-p {
+h2,
+h3,
+p,
+ul {
   margin: 0;
+}
+
+.home-page {
+  padding: 48px 20px 80px;
+}
+
+.home-shell {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+}
+
+.home-section {
+  position: relative;
+  margin-top: 24px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.9fr);
+  gap: 24px;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -72px -72px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(31, 106, 82, 0.22), transparent 68%);
+  pointer-events: none;
+}
+
+.home-eyebrow,
+.home-section-kicker,
+.home-preview-card__code,
+.home-stat-card__label {
+  font-family: "Courier New", "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.home-eyebrow,
+.home-section-kicker {
+  color: var(--accent-deep);
+  margin-bottom: 12px;
+}
+
+.home-hero h1,
+.home-section h2 {
+  max-width: 12ch;
+  font-size: clamp(2.7rem, 6vw, 5.2rem);
+  line-height: 0.98;
+}
+
+.home-section h2 {
+  max-width: 16ch;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+}
+
+.home-lead,
+.home-section-heading p,
+.home-prose > p,
+.home-card p,
+.home-preview-card p,
+.home-faq-item p,
+.home-last-result__body p,
+.home-note p,
+.home-stat-card__value {
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: rgba(26, 23, 17, 0.85);
+}
+
+.home-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: #f7f4ec;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.home-button:hover {
+  transform: translateY(-1px);
+  background: var(--accent-deep);
+}
+
+.home-button--ghost {
+  border-color: var(--line);
+  background: rgba(255, 248, 236, 0.76);
+  color: var(--foreground);
+}
+
+.home-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.home-tag-list li {
+  padding: 9px 12px;
+  border: 1px solid rgba(31, 106, 82, 0.16);
+  border-radius: 999px;
+  background: rgba(214, 235, 223, 0.68);
+}
+
+.home-hero__aside {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.home-note,
+.home-stat-card,
+.home-card,
+.home-preview-card,
+.home-faq-item {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface-strong);
+}
+
+.home-note,
+.home-stat-card {
+  padding: 20px;
+}
+
+.home-note--tilted {
+  transform: rotate(-1.4deg);
+}
+
+.home-note__title,
+.home-card h3,
+.home-preview-card h3,
+.home-faq-item h3,
+.home-last-result__body h2 {
+  margin-bottom: 10px;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.home-stat-card__value {
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
+.home-prose {
+  display: grid;
+  gap: 18px;
+}
+
+.home-columns,
+.home-preview-grid,
+.home-faq-list {
+  display: grid;
+  gap: 18px;
+}
+
+.home-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-card,
+.home-preview-card,
+.home-faq-item {
+  padding: 22px;
+}
+
+.home-card--wide {
+  background:
+    linear-gradient(135deg, rgba(255, 248, 236, 0.95), rgba(214, 235, 223, 0.62));
+}
+
+.home-section-heading {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.home-preview-grid,
+.home-faq-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-preview-card h3 span {
+  display: block;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(26, 23, 17, 0.72);
+}
+
+.home-last-result {
+  background:
+    linear-gradient(120deg, rgba(214, 235, 223, 0.92), rgba(255, 248, 236, 0.94));
+}
+
+.home-last-result__body {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+  .home-hero,
+  .home-columns,
+  .home-preview-grid,
+  .home-faq-list {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero h1,
+  .home-section h2 {
+    max-width: none;
+  }
+
+  .home-last-result__body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-page {
+    padding: 18px 14px 56px;
+  }
+
+  .home-section {
+    padding: 22px 18px;
+    border-radius: 24px;
+  }
+
+  .home-lead,
+  .home-section-heading p,
+  .home-prose > p,
+  .home-card p,
+  .home-preview-card p,
+  .home-faq-item p,
+  .home-last-result__body p,
+  .home-note p,
+  .home-stat-card__value {
+    font-size: 0.98rem;
+  }
 }
