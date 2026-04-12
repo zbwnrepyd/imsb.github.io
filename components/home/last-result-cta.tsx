@@ -68,7 +68,7 @@ export function LastResultCta() {
           )}
         </div>
         <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
-          {hasLatestResult ? "Saved result stays on this page" : "Take the quiz to unlock this area"}
+          {hasLatestResult ? "Saved result stays on this page" : "Result summary unavailable"}
         </button>
       </div>
       <p className="home-helper-copy">
