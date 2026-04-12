@@ -4,7 +4,7 @@ export function NoResult() {
   return (
     <section className="result-card result-card--empty">
       <p className="result-kicker">No result yet</p>
-      <h1>Your IMSB result will show up here after you finish the quiz.</h1>
+      <h1>Your SBTI result will show up here after you finish the quiz.</h1>
       <p className="result-copy">
         The result page is ready, but there is no completed personality test in this browser yet.
       </p>

@@ -13,23 +13,23 @@ const structuredData = {
     {
       "@type": "WebSite",
       "@id": `${siteUrl}#website`,
-      name: "IMSB",
+      name: "SBTI",
       url: siteUrl,
       description:
-        "IMSB is a funny MBTI parody personality test with weird results, meme energy, and entertainment-first personality typing.",
+        "SBTI is a funny MBTI parody personality test with weird results, meme energy, and entertainment-first personality typing.",
       inLanguage: "en",
     },
     {
       "@type": "WebPage",
       "@id": `${siteUrl}#webpage`,
-      name: "IMSB Personality Test | Funny MBTI Parody Test",
+      name: "SBTI Personality Test | Funny MBTI Parody Test",
       url: siteUrl,
       description:
-        "Take the IMSB personality test, an entertainment-first MBTI parody test for people who want a funny personality test instead of a clinical report.",
+        "Take the SBTI personality test, an entertainment-first MBTI parody test for people who want a funny personality test instead of a clinical report.",
       isPartOf: {
         "@id": `${siteUrl}#website`,
       },
-      about: ["IMSB", "MBTI parody test", "funny personality test", "personality test"],
+      about: ["SBTI", "MBTI parody test", "funny personality test", "personality test"],
     },
     {
       "@type": "FAQPage",

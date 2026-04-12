@@ -3,7 +3,7 @@ import { QuizShell } from "@/components/quiz/quiz-shell";
 
 export const metadata: Metadata = {
   title: "Quiz",
-  description: "Take the IMSB quiz and keep your progress in the current browser.",
+  description: "Take the SBTI quiz and keep your progress in the current browser.",
 };
 
 export default function QuizPage() {

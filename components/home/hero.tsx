@@ -5,16 +5,15 @@ export function Hero() {
   return (
     <section className="home-hero home-section">
       <div className="home-hero__copy">
-        <p className="home-eyebrow">IMSB is not your therapist.</p>
-        <h1>IMSB is a funny personality test for people who want MBTI energy without clinical dignity.</h1>
+        <p className="home-eyebrow">SBTI is not your therapist.</p>
+        <h1>SBTI is a funny personality test.</h1>
         <p className="home-lead">
-          The IMSB personality test is an entertainment-first MBTI parody test. It borrows the structure,
-          curiosity, and type-collecting chaos of a classic personality test, then adds meme logic, strange
+          The SBTI personality test is an entertainment-first MBTI parody test with meme logic, strange
           questions, and results that feel a little too specific for comfort.
         </p>
         <div className="home-cta-row">
           <Link className="home-button" href="/quiz">
-            Take the IMSB quiz
+            Take the SBTI quiz
           </Link>
           <a className="home-button home-button--ghost" href="#result-previews">
             Preview the types
@@ -35,7 +34,7 @@ export function Hero() {
           <p className="home-note__title">Why people land here</p>
           <p>
             Usually because they searched for an MBTI personality test, a funny personality test, or something
-            suspiciously close to "what is IMSB and why is everyone posting weird result cards?"
+            suspiciously close to "what is SBTI and why is everyone posting weird result cards?"
           </p>
         </div>
         <div className="home-stat-card">

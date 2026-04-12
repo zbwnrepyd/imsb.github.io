@@ -36,9 +36,9 @@ export function ResultPreviews() {
     <section className="home-section" id="result-previews">
       <p className="home-section-kicker">Preview the result vibe</p>
       <div className="home-section-heading">
-        <h2>Some IMSB types look like MBTI cousins. Then they get weird.</h2>
+        <h2>Some SBTI types look like MBTI cousins. Then they get weird.</h2>
         <p>
-          The point of these previews is not clinical accuracy. It is tone-setting. IMSB results are dramatic,
+          The point of these previews is not clinical accuracy. It is tone-setting. SBTI results are dramatic,
           playful, and intentionally over-written in the best possible way.
         </p>
       </div>
@@ -53,7 +53,7 @@ export function ResultPreviews() {
                 {title} <span>{subtitle}</span>
               </h3>
               <p>
-                <strong>{code}</strong> is the IMSB result code. {blurb}
+                <strong>{code}</strong> is the SBTI result code. {blurb}
               </p>
             </article>
           );

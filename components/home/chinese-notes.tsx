@@ -4,7 +4,7 @@ export function ChineseNotes() {
       <div className="home-section-heading">
         <p className="home-section-kicker">Original Chinese notes</p>
         <h2>原始中文说明</h2>
-        <p>这一部分保留原站气质，方便第一次接触 IMSB 的人理解它最初的荒诞语境。</p>
+        <p>这一部分保留原站气质，方便第一次接触 SBTI 的人理解它最初的荒诞语境。</p>
       </div>
 
       <div className="home-prose">

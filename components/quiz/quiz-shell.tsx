@@ -126,7 +126,7 @@ export function QuizShell() {
   return (
     <div className="quiz-shell">
       <section className="quiz-shell__hero">
-        <p className="quiz-shell__eyebrow">imsb quiz</p>
+        <p className="quiz-shell__eyebrow">sbti quiz</p>
         <h1>把题做完，系统才会给你发电子人格。</h1>
         <p className="quiz-shell__lead">
           进度会自动保存在当前浏览器。隐藏饮酒分支和原始插题逻辑都会继续生效。

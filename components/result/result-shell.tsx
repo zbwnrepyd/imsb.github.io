@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { readLatestResult, type LatestResult } from "@/lib/storage";
 import { dimensionMeta, type DimensionKey } from "@/lib/quiz-data";
 import { NoResult } from "@/components/result/no-result";
+import { ResultPoster } from "@/components/result/result-poster";
 
 function formatCreatedAt(value: string): string | null {
   const date = new Date(value);
@@ -64,20 +65,27 @@ export function ResultShell() {
         <section className="result-card result-card--hero">
           <p className="result-kicker">{payload.modeKicker}</p>
           <div className="result-hero">
-            <div className="result-main">
-              <h1>
-                {payload.finalType.code}
-                <span>{payload.finalType.cn}</span>
-              </h1>
-              <p className="result-badge">{payload.badge}</p>
-              <p className="result-copy">{payload.sub}</p>
-              {createdAt ? (
-                <p className="result-meta">Last updated: {createdAt}</p>
-              ) : null}
-            </div>
-            <div className="result-summary-card">
-              <p className="result-summary-card__title">Original intro</p>
-              <p>{payload.finalType.intro}</p>
+            <ResultPoster
+              code={payload.finalType.code}
+              cn={payload.finalType.cn}
+              intro={payload.finalType.intro}
+            />
+            <div className="result-overview">
+              <div className="result-main">
+                <h1>
+                  {payload.finalType.code}
+                  <span>{payload.finalType.cn}</span>
+                </h1>
+                <p className="result-badge">{payload.badge}</p>
+                <p className="result-copy">{payload.sub}</p>
+                {createdAt ? (
+                  <p className="result-meta">Last updated: {createdAt}</p>
+                ) : null}
+              </div>
+              <div className="result-summary-card">
+                <p className="result-summary-card__title">Original intro</p>
+                <p>{payload.finalType.intro}</p>
+              </div>
             </div>
           </div>
         </section>
@@ -125,7 +133,7 @@ export function ResultShell() {
           <p className="result-kicker">Disclaimer</p>
           <h2>Entertainment only</h2>
           <p className="result-copy">
-            IMSB is a parody personality test. Keep the result card, send it to your friends, and
+            SBTI is a parody personality test. Keep the result card, send it to your friends, and
             absolutely do not treat it like medical advice, a hiring framework, or cosmic truth.
           </p>
           <div className="result-actions">

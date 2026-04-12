@@ -1,23 +1,23 @@
 export const faqItems = [
   {
-    question: "Is IMSB a real psychological assessment?",
+    question: "Is SBTI a real psychological assessment?",
     answer:
-      "No. IMSB is an entertainment-first personality test and a parody personality test. It is designed for fun, self-mockery, and oddly accurate group chats, not diagnosis.",
+      "No. SBTI is an entertainment-first personality test and a parody personality test. It is designed for fun, self-mockery, and oddly accurate group chats, not diagnosis.",
   },
   {
     question: "Why does this page mention MBTI so much?",
     answer:
-      "Because people already understand the basic idea of being sorted into a type. IMSB uses that familiarity to explain itself, but it does not present itself as official MBTI or clinical personality science.",
+      "Because people already understand the basic idea of being sorted into a type. SBTI uses that familiarity to explain itself, but it does not present itself as official MBTI or clinical personality science.",
   },
   {
-    question: "What makes IMSB different from a normal personality test?",
+    question: "What makes SBTI different from a normal personality test?",
     answer:
-      "The writing is weirder, the premise is more playful, and the result types lean into parody. IMSB keeps enough structure to feel like a real test while staying very clear that the product is comedy.",
+      "The writing is weirder, the premise is more playful, and the result types lean into parody. SBTI keeps enough structure to feel like a real test while staying very clear that the product is comedy.",
   },
   {
     question: "Can I see my last result later?",
     answer:
-      "Yes, if your browser storage is available. IMSB can remember the latest local result on the same device so you can jump back in without retaking the full quiz.",
+      "Yes, if your browser storage is available. SBTI can remember the latest local result on the same device so you can jump back in without retaking the full quiz.",
   },
   {
     question: "Should I take my result seriously?",
@@ -33,7 +33,7 @@ export function Faq() {
       <div className="home-section-heading">
         <h2>Questions people ask before trusting a suspiciously funny personality test</h2>
         <p>
-          Fair questions. IMSB looks like a personality test because that format is useful. It also looks like a
+          Fair questions. SBTI looks like a personality test because that format is useful. It also looks like a
           joke because that is the point.
         </p>
       </div>

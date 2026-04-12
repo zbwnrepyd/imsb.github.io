@@ -6,14 +6,14 @@ const siteUrl = "https://imsbtest.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "IMSB Personality Test | Funny MBTI Parody Test",
-    template: "%s | IMSB",
+    default: "SBTI Personality Test | Funny MBTI Parody Test",
+    template: "%s | SBTI",
   },
   description:
-    "Take the IMSB personality test, a funny MBTI parody personality test with meme energy, weirdly specific types, and entertainment-first results.",
-  applicationName: "IMSB",
+    "Take the SBTI personality test, a funny MBTI parody personality test with meme energy, weirdly specific types, and entertainment-first results.",
+  applicationName: "SBTI",
   keywords: [
-    "imsb",
+    "sbti",
     "mbti",
     "personality",
     "test",
@@ -26,19 +26,19 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "IMSB Personality Test | Funny MBTI Parody Test",
+    title: "SBTI Personality Test | Funny MBTI Parody Test",
     description:
-      "IMSB is a funny personality test and MBTI parody test with chaotic prompts, odd results, and zero clinical ambition.",
+      "SBTI is a funny personality test and MBTI parody test with chaotic prompts, odd results, and zero clinical ambition.",
     url: siteUrl,
-    siteName: "IMSB",
+    siteName: "SBTI",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "IMSB Personality Test | Funny MBTI Parody Test",
+    title: "SBTI Personality Test | Funny MBTI Parody Test",
     description:
-      "Take a funny personality test with meme energy, parody logic, and weirdly memorable IMSB result types.",
+      "Take a funny personality test with meme energy, parody logic, and weirdly memorable SBTI result types.",
   },
   robots: {
     index: true,

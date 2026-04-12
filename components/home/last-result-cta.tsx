@@ -54,7 +54,7 @@ export function LastResultCta() {
       </p>
       <div className="home-last-result__body">
         <div>
-          <h2>{hasLatestResult ? "View your last IMSB result" : "Come back here after you get your IMSB type"}</h2>
+          <h2>{hasLatestResult ? "View your last SBTI result" : "Come back here after you get your SBTI type"}</h2>
           {hasLatestResult ? (
             <p>
               Your browser still remembers <strong>{latestResult.payload.finalType.code}</strong>, which this
@@ -63,7 +63,7 @@ export function LastResultCta() {
             </p>
           ) : (
             <p>
-              This area is for your most recent IMSB outcome. After you get a type, you can return here for a quick
+              This area is for your most recent SBTI outcome. After you get a type, you can return here for a quick
               reminder of what the test decided you are.
             </p>
           )}
@@ -74,7 +74,7 @@ export function LastResultCta() {
       </div>
       <p className="home-helper-copy">
         {hasLatestResult
-          ? "Your latest IMSB outcome is ready if you want the full result page again."
+          ? "Your latest SBTI outcome is ready if you want the full result page again."
           : "Finish the quiz once and this section will turn into a shortcut back to your latest result."}
       </p>
     </section>
