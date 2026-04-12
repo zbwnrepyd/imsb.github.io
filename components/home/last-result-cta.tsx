@@ -62,8 +62,8 @@ export function LastResultCta() {
             </p>
           ) : (
             <p>
-              This is the empty-state version of the saved-result card. If IMSB ever stores a local result on this
-              device, this section can surface the latest type without disrupting the article-style homepage.
+              No IMSB result has been saved on this device yet. When a local result exists, this section can show
+              the latest type and keep it easy to revisit.
             </p>
           )}
         </div>
@@ -74,7 +74,7 @@ export function LastResultCta() {
       <p className="home-helper-copy">
         {hasLatestResult
           ? "IMSB can remember your latest local result on the current device. This homepage keeps that memory visible in a lightweight way."
-          : "This section stays visible for every visitor so the homepage keeps a stable structure whether or not any local IMSB result exists yet."}
+          : "This section stays visible for every visitor and becomes more useful whenever IMSB has a saved local result to show."}
       </p>
     </section>
   );
