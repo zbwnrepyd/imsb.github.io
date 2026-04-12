@@ -1,3 +1,4 @@
+import { ChineseNotes } from "@/components/home/chinese-notes";
 import { Faq, faqItems } from "@/components/home/faq";
 import { Hero } from "@/components/home/hero";
 import { Intro } from "@/components/home/intro";
@@ -57,6 +58,7 @@ export default function HomePage() {
         <LastResultCta />
         <Intro />
         <ResultPreviews />
+        <ChineseNotes />
         <Faq />
       </div>
     </main>

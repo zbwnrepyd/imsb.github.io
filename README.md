@@ -1,15 +1,18 @@
 # imsb
 
-Next.js 静态导出工程。当前对外生效的首页来自 `app/page.tsx`，而 `public/` 里的旧静态文件保留为迁移参考。
+基于 Next.js 静态导出的 IMSB 落地页和问卷站点。
 
 ## 目录
 
-- `app/layout.tsx`：App Router 根布局
-- `app/page.tsx`：当前生效的 Next.js 首页
-- `app/globals.css`：全局样式
-- `public/index.html`：保留的旧站点入口
-- `public/main.css`：保留的旧页面样式
-- `public/main.js`：保留的旧题库、评分和结果页逻辑
+- `app/page.tsx`：英文 SEO 首页
+- `app/quiz/page.tsx`：问卷页
+- `app/result/page.tsx`：结果页
+- `components/home/*`：首页区块
+- `components/quiz/*`：问卷组件
+- `components/result/*`：结果页组件
+- `lib/quiz-data.ts`：题库和人格库
+- `lib/quiz-engine.ts`：评分与匹配逻辑
+- `lib/storage.ts`：浏览器缓存层
 
 ## Cloudflare Pages 配置
 
@@ -39,4 +42,4 @@ npm start
 ## 说明
 
 - 这是静态导出配置，构建产物会输出到 `out`
-- 旧的纯静态资源保留在 `public/`，用于迁移参考，不是当前导出首页来源
+- 站点入口已经迁移到 Next.js App Router

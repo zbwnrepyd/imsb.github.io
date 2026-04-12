@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { dimensionOrder, questions } from "@/lib/quiz-data";
 
 export function Hero() {
@@ -12,16 +13,15 @@ export function Hero() {
           questions, and results that feel a little too specific for comfort.
         </p>
         <div className="home-cta-row">
-          <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
-            Interactive quiz unavailable here
-          </button>
+          <Link className="home-button" href="/quiz">
+            Take the IMSB quiz
+          </Link>
           <a className="home-button home-button--ghost" href="#result-previews">
             Preview the types
           </a>
         </div>
         <p className="home-helper-copy">
-          This page is the readable guide to IMSB. The disabled button keeps the landing page informative without
-          sending visitors into a dead end.
+          Read the guide here, then jump into the full quiz when you are ready for a result card.
         </p>
         <ul className="home-tag-list" aria-label="Landing page highlights">
           <li>{questions.length} core questions</li>

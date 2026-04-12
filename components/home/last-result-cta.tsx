@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { readLatestResult, type LatestResult } from "@/lib/storage";
 
@@ -67,14 +68,14 @@ export function LastResultCta() {
             </p>
           )}
         </div>
-        <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
-          {hasLatestResult ? "Saved result stays on this page" : "Result summary unavailable"}
-        </button>
+        <Link className="home-button" href={hasLatestResult ? "/result" : "/quiz"}>
+          {hasLatestResult ? "Open result page" : "Start the quiz"}
+        </Link>
       </div>
       <p className="home-helper-copy">
         {hasLatestResult
-          ? "IMSB can remember your latest local result on the current device. This homepage keeps that memory visible in a lightweight way."
-          : "It is a simple spot for checking your type again without rereading the whole page."}
+          ? "Your latest IMSB outcome is ready if you want the full result page again."
+          : "Finish the quiz once and this section will turn into a shortcut back to your latest result."}
       </p>
     </section>
   );
