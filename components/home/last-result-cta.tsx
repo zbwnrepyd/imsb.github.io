@@ -49,11 +49,11 @@ export function LastResultCta() {
   return (
     <section className="home-section home-last-result" aria-label="Your saved result or placeholder">
       <p className="home-section-kicker">
-        {hasLatestResult ? "Welcome back, typed creature" : "No local result yet"}
+        {hasLatestResult ? "Welcome back, typed creature" : "Your result space"}
       </p>
       <div className="home-last-result__body">
         <div>
-          <h2>{hasLatestResult ? "View your last IMSB result" : "Your latest result will show up here later"}</h2>
+          <h2>{hasLatestResult ? "View your last IMSB result" : "Come back here after you get your IMSB type"}</h2>
           {hasLatestResult ? (
             <p>
               Your browser still remembers <strong>{latestResult.payload.finalType.code}</strong>, which this
@@ -62,19 +62,19 @@ export function LastResultCta() {
             </p>
           ) : (
             <p>
-              No IMSB result has been saved on this device yet. When a local result exists, this section can show
-              the latest type and keep it easy to revisit.
+              This area is for your most recent IMSB outcome. After you get a type, you can return here for a quick
+              reminder of what the test decided you are.
             </p>
           )}
         </div>
         <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
-          {hasLatestResult ? "Saved result stays on this page" : "No saved result on this device"}
+          {hasLatestResult ? "Saved result stays on this page" : "Take the quiz to unlock this area"}
         </button>
       </div>
       <p className="home-helper-copy">
         {hasLatestResult
           ? "IMSB can remember your latest local result on the current device. This homepage keeps that memory visible in a lightweight way."
-          : "This section stays visible for every visitor and becomes more useful whenever IMSB has a saved local result to show."}
+          : "It is a simple spot for checking your type again without rereading the whole page."}
       </p>
     </section>
   );
