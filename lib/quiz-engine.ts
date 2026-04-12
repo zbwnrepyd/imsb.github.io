@@ -5,13 +5,18 @@ import {
   dimensionMeta,
   dimensionOrder,
   questions,
+  specialQuestions,
   type DimensionKey,
   type Level,
   type QuizQuestionId,
+  type SpecialQuestion,
   type TypeCode,
+  type QuizQuestion,
 } from './quiz-data';
 
 export type QuizAnswers = Record<string, number | undefined>;
+export type QuizQuestionOrder = string[];
+export type VisibleQuizQuestion = QuizQuestion | SpecialQuestion;
 
 type TypeProfile = {
   code: string;
@@ -39,6 +44,146 @@ export type QuizResult = {
   special: boolean;
   secondaryType: RankedType | null;
 };
+
+const DRINK_GATE_QUESTION_ID = specialQuestions[0].id;
+const baseQuestionIds = [...questions.map((question) => question.id), DRINK_GATE_QUESTION_ID];
+const questionLookup = new Map<string, VisibleQuizQuestion>(
+  [...questions, ...specialQuestions].map((question) => [question.id, question]),
+);
+const baseQuestionIdSet = new Set<string>(baseQuestionIds);
+
+function shuffleIds(
+  ids: readonly QuizQuestionId[],
+  random: () => number,
+): QuizQuestionId[] {
+  const next = [...ids];
+
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+
+  return next;
+}
+
+function hasAnswer(
+  answers: QuizAnswers,
+  questionId: string,
+): boolean {
+  return answers[questionId] !== undefined;
+}
+
+function isValidAnswerValue(questionId: string, value: number): boolean {
+  const question = questionLookup.get(questionId);
+  return question ? question.options.some((option) => option.value === value) : false;
+}
+
+export function createQuestionOrder(random: () => number = Math.random): QuizQuestionOrder {
+  const shuffledRegularIds = shuffleIds(
+    questions.map((question) => question.id),
+    random,
+  );
+  const insertIndex = Math.floor(random() * shuffledRegularIds.length) + 1;
+
+  return [
+    ...shuffledRegularIds.slice(0, insertIndex),
+    DRINK_GATE_QUESTION_ID,
+    ...shuffledRegularIds.slice(insertIndex),
+  ];
+}
+
+export function isQuestionOrderValid(questionOrder: readonly string[]): boolean {
+  if (questionOrder.length !== baseQuestionIds.length) {
+    return false;
+  }
+
+  const seen = new Set<string>();
+
+  for (const questionId of questionOrder) {
+    if (!baseQuestionIdSet.has(questionId) || seen.has(questionId)) {
+      return false;
+    }
+
+    seen.add(questionId);
+  }
+
+  return seen.size === baseQuestionIds.length;
+}
+
+export function normalizeQuizAnswers(answers: QuizAnswers): Record<string, number> {
+  const normalizedAnswers: Record<string, number> = {};
+
+  for (const [questionId, value] of Object.entries(answers)) {
+    if (typeof value !== 'number' || !Number.isInteger(value)) {
+      continue;
+    }
+
+    if (!isValidAnswerValue(questionId, value)) {
+      continue;
+    }
+
+    normalizedAnswers[questionId] = value;
+  }
+
+  if (normalizedAnswers[DRINK_GATE_QUESTION_ID] !== 3) {
+    delete normalizedAnswers[DRUNK_TRIGGER_QUESTION_ID];
+  }
+
+  return normalizedAnswers;
+}
+
+export function applyAnswer(
+  answers: QuizAnswers,
+  questionId: string,
+  value: number,
+): Record<string, number> {
+  return normalizeQuizAnswers({
+    ...answers,
+    [questionId]: value,
+  });
+}
+
+export function getVisibleQuestionIds(
+  questionOrder: readonly string[],
+  answers: QuizAnswers,
+): string[] {
+  const visibleQuestionIds = [...questionOrder];
+  const gateIndex = visibleQuestionIds.indexOf(DRINK_GATE_QUESTION_ID);
+
+  if (gateIndex !== -1 && answers[DRINK_GATE_QUESTION_ID] === 3) {
+    visibleQuestionIds.splice(gateIndex + 1, 0, DRUNK_TRIGGER_QUESTION_ID);
+  }
+
+  return visibleQuestionIds;
+}
+
+export function getVisibleQuestions(
+  questionOrder: readonly string[],
+  answers: QuizAnswers,
+): VisibleQuizQuestion[] {
+  return getVisibleQuestionIds(questionOrder, answers)
+    .map((questionId) => questionLookup.get(questionId))
+    .filter((question): question is VisibleQuizQuestion => question !== undefined);
+}
+
+export function getQuizProgress(
+  questionOrder: readonly string[],
+  answers: QuizAnswers,
+): {
+  answered: number;
+  total: number;
+  complete: boolean;
+} {
+  const visibleQuestionIds = getVisibleQuestionIds(questionOrder, answers);
+  const answered = visibleQuestionIds.filter((questionId) => hasAnswer(answers, questionId)).length;
+  const total = visibleQuestionIds.length;
+
+  return {
+    answered,
+    total,
+    complete: total > 0 && answered === total,
+  };
+}
 
 export function sumToLevel(score: number): Level {
   if (score <= 3) {

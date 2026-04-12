@@ -8,7 +8,13 @@ import {
   questions,
   specialQuestions,
 } from '../lib/quiz-data';
-import { computeResult } from '../lib/quiz-engine';
+import {
+  applyAnswer,
+  computeResult,
+  createQuestionOrder,
+  getVisibleQuestions,
+  isQuestionOrderValid,
+} from '../lib/quiz-engine';
 
 function buildUniformAnswers(value: number) {
   return Object.fromEntries(questions.map((question) => [question.id, value]));
@@ -34,6 +40,44 @@ function buildAnswersFromLevels(levels: readonly ('L' | 'M' | 'H')[]) {
 }
 
 describe('computeResult regression', () => {
+  it('creates a resumable base question order with the drink gate inserted once', () => {
+    const order = createQuestionOrder(() => 0);
+
+    expect(order).toHaveLength(questions.length + 1);
+    expect(order).toContain('drink_gate_q1');
+    expect(order).not.toContain('drink_gate_q2');
+    expect(order[1]).toBe('drink_gate_q1');
+    expect(isQuestionOrderValid(order)).toBe(true);
+  });
+
+  it('reveals the hidden drink follow-up only after selecting the gate answer', () => {
+    const questionOrder = ['q1', 'drink_gate_q1', 'q2'];
+
+    expect(getVisibleQuestions(questionOrder, {}).map((question) => question.id)).toEqual([
+      'q1',
+      'drink_gate_q1',
+      'q2',
+    ]);
+    expect(
+      getVisibleQuestions(questionOrder, { drink_gate_q1: 3 }).map((question) => question.id),
+    ).toEqual(['q1', 'drink_gate_q1', 'drink_gate_q2', 'q2']);
+  });
+
+  it('drops the hidden drink answer when the gate answer changes away from drinking', () => {
+    const answers = applyAnswer(
+      {
+        drink_gate_q1: 3,
+        drink_gate_q2: 2,
+      },
+      'drink_gate_q1',
+      1,
+    );
+
+    expect(answers).toEqual({
+      drink_gate_q1: 1,
+    });
+  });
+
   it('keeps extracted quiz data internally consistent', () => {
     expect(dimensionOrder).toHaveLength(15);
     expect(Object.keys(dimensionMeta)).toEqual([...dimensionOrder]);
