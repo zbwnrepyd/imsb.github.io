@@ -13,15 +13,15 @@ export function Hero() {
         </p>
         <div className="home-cta-row">
           <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
-            Interactive test coming next
+            Interactive quiz unavailable here
           </button>
           <a className="home-button home-button--ghost" href="#result-previews">
             Preview the types
           </a>
         </div>
         <p className="home-helper-copy">
-          This landing page is live first for SEO and context. The quiz flow ships in the next task, so there is
-          no broken route hiding behind the button.
+          This page is the readable guide to IMSB. The disabled button keeps the landing page informative without
+          sending visitors into a dead end.
         </p>
         <ul className="home-tag-list" aria-label="Landing page highlights">
           <li>{questions.length} core questions</li>

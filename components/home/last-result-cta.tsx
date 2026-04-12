@@ -62,20 +62,19 @@ export function LastResultCta() {
             </p>
           ) : (
             <p>
-              First-time visitors will see an empty-state version of this section. Once the interactive quiz and
-              result routes land in the next tasks, this card will surface your latest local IMSB type on the same
-              device.
+              This is the empty-state version of the saved-result card. If IMSB ever stores a local result on this
+              device, this section can surface the latest type without disrupting the article-style homepage.
             </p>
           )}
         </div>
         <button className="home-button home-button--disabled" type="button" disabled aria-disabled="true">
-          {hasLatestResult ? "Result page coming next" : "Save a result in the next task"}
+          {hasLatestResult ? "Saved result stays on this page" : "No saved result on this device"}
         </button>
       </div>
       <p className="home-helper-copy">
         {hasLatestResult
-          ? "Local result memory is already in place. The dedicated `/result` route is intentionally held for the next task, so this page stays non-broken in the meantime."
-          : "This section is intentionally present on the homepage for everyone. It stays informative now, then becomes result-aware once the interactive pages are added."}
+          ? "IMSB can remember your latest local result on the current device. This homepage keeps that memory visible in a lightweight way."
+          : "This section stays visible for every visitor so the homepage keeps a stable structure whether or not any local IMSB result exists yet."}
       </p>
     </section>
   );
