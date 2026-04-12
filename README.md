@@ -1,30 +1,45 @@
 # imsb
 
-纯静态站点，适合直接部署到 Cloudflare Pages。
+基于 Next.js 静态导出的 IMSB 落地页和问卷站点。
 
 ## 目录
 
-- `public/index.html`：站点入口
-- `public/main.css`：页面样式
-- `public/main.js`：题库、评分和结果页逻辑
+- `app/page.tsx`：英文 SEO 首页
+- `app/quiz/page.tsx`：问卷页
+- `app/result/page.tsx`：结果页
+- `components/home/*`：首页区块
+- `components/quiz/*`：问卷组件
+- `components/result/*`：结果页组件
+- `lib/quiz-data.ts`：题库和人格库
+- `lib/quiz-engine.ts`：评分与匹配逻辑
+- `lib/storage.ts`：浏览器缓存层
 
 ## Cloudflare Pages 配置
 
-- Framework preset：`None`
-- Build command：留空
-- Build output directory：`public`
+- Framework preset: `Next.js (Static HTML Export)`
+- Build command: `npx next build`
+- Build output directory: `out`
 
 ## 本地预览
 
-如果只是快速看页面，可以在仓库根目录执行：
+开发时运行 Next.js，预览导出产物时先构建再启动静态服务：
 
 ```bash
-python3 -m http.server 8000 --directory public
+npm install
+npm run dev
 ```
 
-然后访问 `http://localhost:8000`。
+```bash
+npm run build
+npm start
+```
+
+`npm run dev` 用于开发，`npm start` 用于预览 `out/`。
+`npm start` 依赖系统可用的 `python3` 来提供静态文件服务。
+
+然后访问 `http://localhost:3000`。
 
 ## 说明
 
-- 不需要 `wrangler deploy`
-- 这是纯静态资源发布，不需要依赖安装和构建步骤
+- 这是静态导出配置，构建产物会输出到 `out`
+- 站点入口已经迁移到 Next.js App Router
